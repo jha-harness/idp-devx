@@ -20,6 +20,14 @@ spec:
           type: string
           ui:widget: password
           ui:field: HarnessAuthToken
+        username:
+          title: username
+          type: string 
+          description: Enter the Harness User email to be onboarded to the project
+          maxLength: 11
+          pattern: '^([a-z]*)*$'
+          ui:autofocus: true
+          
         Project:
           title: Choose a project to be onboarded to
           type: string
