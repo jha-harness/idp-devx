@@ -27,7 +27,8 @@ spec:
           default: Wave Team
     - title: Project Team Details
       required:
-        - owner  
+        - owner 
+      properties:
         owner:
           title: Choose an Group to join
           type: string
