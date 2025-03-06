@@ -1,15 +1,15 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: devxproject
-  title: Self Service Infrastructure & Harness Automation
-  description: A template for product as a service (Infrastructure, Code, CI/CD)
+  name: waveproject
+  title: Onboarding Dev to project, repo, pipeline
+  description: A workflow for a new engineer to begin building, testing, and coding.
   tags:
     - automation
     - self-service
     - harness
 spec:
-  owner: nikolaos.papageorgiou@harness.io
+  owner: james.ha@harness.io
   type: service
   parameters:
     - title: Input Data
@@ -20,46 +20,28 @@ spec:
           type: string
           ui:widget: password
           ui:field: HarnessAuthToken
-        username:
-          title: username
-          type: string 
-          description: Enter a 6 character or less, lowercase username. It will be prepended and used in the proejct name like so DevX_<<username>>
-          maxLength: 11
-          pattern: '^([a-z]*)*$'
-          ui:autofocus: true
-      errorMessage:
-        properties:
-          username: '1-6 characters, lowercase characters only'
-    - title: Service Infrastructure Details
-      required:
-        - provider
-        - db
-        - owner  
-      properties:
-        provider:
-          title: Choose a cloud provider for Deployment
+        Project:
+          title: Choose a project to be onboarded to
           type: string
-          enum: ['GCP', 'AWS', "AZURE"]
-          default: AWS
+          enum: ['Wave Team', 'Tide Group', 'Tsunami Core']
+          default: Wave Team
+    - title: Project Team Details
+      required:
+        - owner  
         owner:
-          title: Choose an Owner for the Service
+          title: Choose an Group to join
           type: string
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
               - Group
-        db:
-          title: Choose a Database Type for the Service
-          type: string
-          enum: ['None', 'MySQL', 'Postgres', 'MongoDB']
-          default: None
   steps:
     # Call Harness Pipelines to create the service infra and other things
     - id: trigger
       name: Create all self-service components using harness templates
       action: trigger:harness-custom-pipeline
       input:
-        url: 'https://app.harness.io/ng/account/EeRjnXTnS4GrLG5VNNJZUw/module/cd/orgs/demo/projects/Reference_Architecture/pipelines/DevX_Project_Provision/pipeline-studio?repoName=org.devx_provision&branch=main'
+        url: 'https://app.harness.io/ng/account/EeRjnXTnS4GrLG5VNNJZUw/module/cd/orgs/demo/projects/Reference_Architecture/pipelines/Onboard_New_Dev/pipeline-studio/?storeType=INLINE&stageId=Provision_Harness_Resources&sectionId=EXECUTION'
         inputset:
           username: ${{ parameters.username }}
         apikey: ${{ parameters.token }}
