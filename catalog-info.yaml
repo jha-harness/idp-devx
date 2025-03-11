@@ -31,17 +31,15 @@ spec:
           type: string
           enum: ['Wave Team', 'Tide Group', 'Tsunami Core']
           default: Wave Team
-    - title: Project Team Details
-      required:
-        - owner 
-      properties:
-        owner:
-          title: Choose an Group to join
+
+        Branch:
+          title: Create a repo branch for the user?
           type: string
-          ui:field: OwnerPicker
-          ui:options:
-            allowedKinds:
-              - Group
+          enum:
+            - Yes
+            - No
+          ui:widget: radio
+
   steps:
     # Call Harness Pipelines to create the service infra and other things
     - id: trigger
